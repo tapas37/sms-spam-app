@@ -1,26 +1,22 @@
 import streamlit as st
 import pickle
 import string
+import os
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# ---------------------------
-# Download NLTK data at runtime (for Streamlit Cloud)
-# ---------------------------
-nltk.download('punkt')
-nltk.download('stopwords')
+# Setup NLTK to use the local nltk_data folder
+nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
+nltk.data.path.append(nltk_data_dir)
 
 ps = PorterStemmer()
 
-# ---------------------------
-# Text preprocessing
-# ---------------------------
+
 def transform_text(text):
-    # lower case
     text = text.lower()
 
-    # tokenization
+    # tokenization using local punkt
     text = nltk.word_tokenize(text)
 
     # remove non-alphanumeric
@@ -28,7 +24,7 @@ def transform_text(text):
     text = y[:]
     y.clear()
 
-    # remove stopwords and punctuation
+    # remove stopwords and punctuation using local stopwords
     for i in text:
         if i not in stopwords.words('english') and i not in string.punctuation:
             y.append(i)
@@ -40,6 +36,7 @@ def transform_text(text):
         y.append(ps.stem(i))
 
     return " ".join(y)
+
 
 # ---------------------------
 # Load model and vectorizer
