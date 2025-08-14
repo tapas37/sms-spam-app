@@ -5,6 +5,11 @@ import string
 import nltk
 from nltk.stem.porter import PorterStemmer
 ps=PorterStemmer()
+import nltk
+
+# Download required NLTK datasets
+nltk.download('stopwords')
+nltk.download('punkt')
 
 def transform_text(text):
     # lower case
