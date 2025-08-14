@@ -6,29 +6,29 @@ import os
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+ps = PorterStemmer()
+
 # ---------------------------
-# Setup NLTK data path
+# Setup NLTK data for Streamlit Cloud
 # ---------------------------
 nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
 nltk.data.path.append(nltk_data_dir)
-
-ps = PorterStemmer()
 
 # ---------------------------
 # Text preprocessing
 # ---------------------------
 def transform_text(text):
-    text = text.lower()  # lowercase
-    text = nltk.word_tokenize(text)  # tokenization
-    y = [i for i in text if i.isalnum()]  # remove non-alphanumeric
+    text = text.lower()
+    text = nltk.word_tokenize(text)  # will use local punkt
+    y = [i for i in text if i.isalnum()]
     text = y[:]
     y.clear()
-    for i in text:  # remove stopwords and punctuation
+    for i in text:
         if i not in stopwords.words('english') and i not in string.punctuation:
             y.append(i)
     text = y[:]
     y.clear()
-    for i in text:  # stemming
+    for i in text:
         y.append(ps.stem(i))
     return " ".join(y)
 
