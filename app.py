@@ -6,13 +6,17 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+# ---------------------------
 # Setup NLTK to use the local nltk_data folder
-nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
+# ---------------------------
+nltk_data_dir = os.path.join(os.path.dirname(__file__), "nltk_data")
 nltk.data.path.append(nltk_data_dir)
 
 ps = PorterStemmer()
 
-
+# ---------------------------
+# Text preprocessing
+# ---------------------------
 def transform_text(text):
     text = text.lower()
 
@@ -36,7 +40,6 @@ def transform_text(text):
         y.append(ps.stem(i))
 
     return " ".join(y)
-
 
 # ---------------------------
 # Load model and vectorizer
